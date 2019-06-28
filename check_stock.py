@@ -284,16 +284,14 @@ if __name__ == "__main__":
     with open(f'/tmp/data/{time_str}_all_data.json', 'w') as json_file:
         json.dump(products, json_file)
 
-    with open(f'/tmp/data/{time_str}_new.json', 'w') as json_file:
-        json.dump(new_products, json_file)
-
-    with open(f'/tmp/data/{time_str}_hits.json', 'w') as json_file:
-        json.dump(hits, json_file)
-
     if len(new_products) > 0:
+        with open(f'/tmp/data/{time_str}_new.json', 'w') as json_file:
+            json.dump(new_products, json_file)
         print("NEW PRODUCTS")
         pprint.pprint(new_products)
     if len(hits) > 0:
+        with open(f'/tmp/data/{time_str}_hits.json', 'w') as json_file:
+            json.dump(hits, json_file)
         print('----')
         print("TARGETED HITS")
         pprint.pprint(hits)
