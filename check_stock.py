@@ -29,12 +29,16 @@ def _fix_url(url):
 
 
 def _get_url_content(url):
-    r = requests.get(url, allow_redirects=True)
+    try:
+        r = requests.get(url, allow_redirects=True, timeout=10)
+    except Exception as e:
+        logging.fatal(f'Failed to query {url}:\n{e}')
+        sys.exit(1)
     if r.status_code != 200:
-        logging.fatal(f'Status code is {r.status_code}')
+        logging.fatal(f'Status code is {r.status_code}: {url}')
         sys.exit(1)
     if len(r.content) == 0:
-        logging.fatal('Returned content has len of 0')
+        logging.fatal(f'Returned content has len of 0: {url}')
         sys.exit(1)
     return r.content
 
