@@ -33,13 +33,13 @@ def _get_url_content(url):
         r = requests.get(url, allow_redirects=True, timeout=10)
     except Exception as e:
         logging.fatal(f'Failed to query {url}:\n{e}')
-        sys.exit(1)
+        return ""
     if r.status_code != 200:
         logging.fatal(f'Status code is {r.status_code}: {url}')
-        sys.exit(1)
+        return ""
     if len(r.content) == 0:
         logging.fatal(f'Returned content has len of 0: {url}')
-        sys.exit(1)
+        return ""
     return r.content
 
 
@@ -141,7 +141,7 @@ def _find_laptops(soup):
         laptops_containers = results[0].find_all('div', {"class" : "facetedResults-item only-allow-small-pricingSummary"})
     except:
         logging.fatal("Couldn't extract laptops_containers")
-        sys.exit(1)
+        return products
 
     for laptop_container in laptops_containers:
         products.append(_extract_laptop_details(laptop_container))
